@@ -13,31 +13,63 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      litecoin: 0,
+      btce: {
+        ltc: 0,
+        eth: 0,
+        dsh: 0,
+      },
+      poloniex: {
+        ltc: 0,
+        eth: 0,
+        dsh: 0,
+      },
     }
   }
 
   componentDidMount() {
-    // this.fetchLite('https://btc-e.com/api/2/ltc_usd/ticker')
-    // this.fetchLite('https://btc-e.com/api/2/eth_usd/ticker')
-    // this.fetchLite('https://poloniex.com/public?command=returnTicker')
-    // this.fetchLite()
+    // this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
+    // this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
+    // this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
+    this.fetchPoloniex()
   }
 
-  fetchLite() {
-    fetch('https://btc-e.com/api/2/dsh_usd/ticker', {
+  fetchBtc(url) {
+    fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+      }
+    })
+    .then(response => response.json())
+    // .then(data => this.postBtc(data))
+    .catch(error => console.log(error))
+  }
+
+  postPoloniex(data) {
+    fetch('api/pricing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*'
       },
-      strictSSL: false,
+      body: JSON.stringify({
+        polo_ltc: data.USDT_LTC,
+        polo_eth: data.USDT_ETH,
+        polo_dsh: data.USDT_DASH }),
+    })
+  }
+
+  fetchPoloniex() {
+    fetch('https://poloniex.com/public?command=returnTicker', {
+      method: 'GET',
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => this.postPoloniex(data))
     .catch(error => console.log(error))
   }
 
