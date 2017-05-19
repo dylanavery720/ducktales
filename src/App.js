@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
+//SHOW AVERAGE, LAST, AND PRICE TO BUY AT, IF LAST HITS BUY SEND NOTIFICATION?
+
+
+
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      litecoin: 0,
+    }
+  }
+
+  componentDidMount() {
+    // this.fetchLite('https://btc-e.com/api/2/ltc_usd/ticker')
+  }
+
+  fetchLite() {
+    fetch('https://btc-e.com/api/2/ltc_usd/ticker', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+      },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
         <p className="App-intro">

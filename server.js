@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const btceApi = require('btce-api')
+const cors = require('cors')
 
 const app = express()
 
@@ -16,6 +18,7 @@ const Pricing = mongoose.model('Pricing', {
 
 app.use(express.static(__dirname + '/public'))
 app.use(morgan('dev'))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: 'true' }))
 app.use(bodyParser.json())
 app.use(methodOverride())
