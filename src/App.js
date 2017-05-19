@@ -13,16 +13,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      btce: {
-        ltc: 0,
-        eth: 0,
-        dsh: 0,
-      },
-      poloniex: {
-        ltc: 0,
-        eth: 0,
-        dsh: 0,
-      },
+      
     }
   }
 
@@ -30,47 +21,7 @@ class App extends Component {
     // this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
     // this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     // this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
-    this.fetchPoloniex()
-  }
-
-  fetchBtc(url) {
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*'
-      }
-    })
-    .then(response => response.json())
-    // .then(data => this.postBtc(data))
-    .catch(error => console.log(error))
-  }
-
-  postPoloniex(data) {
-    fetch('api/pricing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*'
-      },
-      body: JSON.stringify({
-        polo_ltc: data.USDT_LTC,
-        polo_eth: data.USDT_ETH,
-        polo_dsh: data.USDT_DASH }),
-    })
-  }
-
-  fetchPoloniex() {
-    fetch('https://poloniex.com/public?command=returnTicker', {
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then(data => this.postPoloniex(data))
-    .catch(error => console.log(error))
+    // this.fetchPoloniex()
   }
 
   render() {

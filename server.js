@@ -3,7 +3,10 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+
 const cors = require('cors')
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 const app = express()
 
@@ -16,6 +19,46 @@ const Pricing = mongoose.model('Pricing', {
   poloniex: String,
   coincap: String,
 })
+
+const postPoloniex = (data) => {
+  fetch('api/pricing', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*'
+    },
+    body: JSON.stringify({
+      polo_ltc: data.USDT_LTC,
+      polo_eth: data.USDT_ETH,
+      polo_dsh: data.USDT_DASH }),
+  })
+}
+
+const fetchBtc = (url) => {
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*'
+      }
+    })
+    .then(response => response.json())
+    // .then(data => this.postBtc(data))
+    .catch(error => console.log(error))
+  }
+
+const fetchPoloniex = () => {
+  fetch('https://poloniex.com/public?command=returnTicker', {
+    method: 'GET',
+  })
+    .then(response => response.json())
+    .then(data => postPoloniex(data))
+    .catch(error => console.log(error))
+}
 
 app.use(express.static(__dirname + '/build'))
 app.use(morgan('dev'))
@@ -67,6 +110,7 @@ app.delete('/api/pricing/:price_id', (req, res) => {
 })
 
 app.get('*', (req, res) => {
+  fetchPoloniex()
   res.sendfile('./build/index.html')
 })
 
