@@ -8,6 +8,9 @@ module.exports = {
     this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
+    this.fetchBtc('https://btc-e.com/api/2/eth_btc/ticker')
+    this.fetchBtc('https://btc-e.com/api/2/ltc_btc/ticker')
+    this.fetchBtc('https://btc-e.com/api/2/dsh_btc/ticker')
     setTimeout(() => this.postToMongo(batchData), 1000)
   },
 
@@ -24,9 +27,16 @@ module.exports = {
         btce_ltc: data.btce.ltc_usd.ticker,
         btce_eth: data.btce.eth_usd.ticker,
         btce_dsh: data.btce.dsh_usd.ticker,
+        btc_ltc: data.btce.ltc_btc.ticker,
+        btc_eth: data.btce.eth_btc.ticker,
+        btc_dsh: data.btce.dsh_btc.ticker,
         polo_ltc: data.polo.USDT_LTC,
         polo_eth: data.polo.USDT_ETH,
-        polo_dsh: data.polo.USDT_DASH }),
+        polo_dsh: data.polo.USDT_DASH,
+        polo_ltc_btc: data.polo.BTC_LTC,
+        polo_eth_btc: data.polo.BTC_ETH,
+        polo_dsh_btc: data.polo.BTC_DASH,
+      }),
     })
   },
 
