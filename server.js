@@ -3,10 +3,10 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-
+const helpers = require('./helpers.js')
 const cors = require('cors')
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
+
+// const port = set up some production stuffs... garage bin or milkman...
 
 const app = express()
 
@@ -16,57 +16,16 @@ const Pricing = mongoose.model('Pricing', {
   polo_ltc: {},
   polo_eth: {},
   polo_dsh: {},
+  btce_ltc: {},
+  btce_eth: {},
+  btce_dsh: {},
   poloniex: String,
   coincap: String,
 })
 
-const postPoloniex = (data) => {
-  fetch('api/pricing', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Methods': '*'
-    },
-    body: JSON.stringify({
-      polo_ltc: data.USDT_LTC,
-      polo_eth: data.USDT_ETH,
-      polo_dsh: data.USDT_DASH }),
-  })
-}
-
-const fetchBtc = (url) => {
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*'
-      }
-    })
-    .then(response => response.json())
-    // .then(data => this.postBtc(data))
-    .catch(error => console.log(error))
-  }
-
-const fetchPoloniex = () => {
-  fetch('https://poloniex.com/public?command=returnTicker', {
-    method: 'GET',
-  })
-    .then(response => response.json())
-    .then(data => postPoloniex(data))
-    .catch(error => console.log(error))
-}
 
 app.use(express.static(__dirname + '/build'))
 app.use(morgan('dev'))
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', '*');
-//   next();
-// });
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: 'true' }))
 app.use(bodyParser.json())
@@ -79,21 +38,44 @@ app.get('/api/pricing', (req, res) => {
   })
 })
 
+
+//TRY TO USE UPDATE INSTEAD OF CREATE ON THE PRICING TABLE...
+
 app.post('/api/pricing', (req, res) => {
-  console.log(req.body)
   Pricing.create({
     polo_ltc: req.body.polo_ltc,
     polo_eth: req.body.polo_eth,
     polo_dsh: req.body.polo_dsh,
-    poloniex: req.body.poloniex,
+    btce_ltc: req.body.btce_ltc,
+    btce_eth: req.body.btce_eth,
+    btce_dsh: req.body.btce_dsh,
     coincap: req.body.coincap,
     done: false,
   }, (err, prices) => {
-    // if (err) res.send(err);
     Pricing.find((err, prices) => {
-      // if (err) res.send(err)
       res.json(prices)
     })
+  })
+})
+
+
+app.patch('/api/pricing/:id', (req, res) => {
+  Pricing.findById(req.params.id, (err, pricing) => {
+    if (err) console.log(err)
+    else {
+      pricing.polo_ltc = req.body.polo_ltc || pricing.polo_ltc
+      pricing.polo_eth = req.body.polo_eth || pricing.polo_eth
+      pricing.polo_dsh = req.body.polo_dsh || pricing.polo_dsh
+      pricing.btce_ltc = req.body.btce_ltc || pricing.btce_ltc
+      pricing.btce_eth = req.body.btce_eth || pricing.btce_eth
+      pricing.btce_dsh = req.body.btce_dsh || pricing.btce_dsh
+
+      pricing.save((err, prices) => {
+        if (err) console.log(err)
+        res.json(prices)
+      })
+
+    }
   })
 })
 
@@ -110,10 +92,10 @@ app.delete('/api/pricing/:price_id', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  fetchPoloniex()
+  helpers.fetchPoloniex()
   res.sendfile('./build/index.html')
 })
 
 app.listen(8080, () => {
-  console.log('App listening on port 8080')
+  helpers.serverOn()
 })
