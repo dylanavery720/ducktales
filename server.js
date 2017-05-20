@@ -38,7 +38,7 @@ app.get('/api/pricing', (req, res) => {
   })
 })
 
-//EITHER BATCH API CALLS TOGETHER BEFORE MAKING ONE POST CREATE ONE GIANT TABLE OR..
+
 //TRY TO USE UPDATE INSTEAD OF CREATE ON THE PRICING TABLE...
 
 app.post('/api/pricing', (req, res) => {
@@ -49,7 +49,6 @@ app.post('/api/pricing', (req, res) => {
     btce_ltc: req.body.btce_ltc,
     btce_eth: req.body.btce_eth,
     btce_dsh: req.body.btce_dsh,
-    poloniex: req.body.poloniex,
     coincap: req.body.coincap,
     done: false,
   }, (err, prices) => {
@@ -75,8 +74,7 @@ app.patch('/api/pricing/:id', (req, res) => {
         if (err) console.log(err)
         res.json(prices)
       })
-    //   prices.poloniex = req.body.poloniex || 
-    //  prices.coincap = req.body.coincap || 
+
     }
   })
 })
