@@ -1,7 +1,3 @@
-.App {
-  /*text-align: center;*/
-}
-
 .App-header {
   background-color: #212121;
   height: 100px;
@@ -74,6 +70,19 @@ img {
   display: inline-block;
   text-align: center;
 }
+
+button {
+    display: inline-block;
+    width: 100%;
+    padding: 8px;
+    color: #212121;
+    background: rgba(55,55,55, 0.3);
+    border: 2px solid #fff;
+    outline: none;
+    font-size: 50px;
+    cursor: pointer;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

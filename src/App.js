@@ -16,37 +16,38 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-
+      payload: {},
     }
   }
 
-  setTheBar(current) {
-    const bar = {
-      height: `${current}%`,
-    }
-    return Object.assign({}, bar)
+  fetchFromMongo(){
+    console.log('working')
+    fetch('/api/pricing')
+    .then(response => response.json())
+    .then(data => this.setState({payload: data[data.length-1]}))
   }
 
   //Break sub-graphs into components
   render() {
-    const percentage = this.props.children + '%';
+    const { btce_dsh, btce_eth, btce_ltc, polo_dsh, polo_eth, polo_ltc} = this.state.payload
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} />
           <h2>Ducktales</h2>
         </div>
-        <div id="usd-graph" className="graph-container">
+        {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW TICKER</button> }
+        {this.state.payload._id && <div><div id="usd-graph" className="graph-container">
           <h1>USD</h1>
           <div className="graph">
             <h3>BtcE</h3>
-            <div className="bar1" style={{height: 20 + "%"}}>
+            <div className="bar1" style={{height: btce_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+            <div className="bar1" style={{height: btce_dsh.last/2 + "%"}}>
+              <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: 50 + "%"}}>
+            <div className="bar2" style={{height: btce_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
@@ -113,7 +114,7 @@ class App extends Component {
               <p>Ether</p>
             </div>
           </div>
-        </div>
+        </div></div>}
       </div>
     );
   }
