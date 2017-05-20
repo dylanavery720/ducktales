@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import logo from './ducktalesgold.png';
 import './App.css';
 
 // SHOW AVERAGE, LAST, AND PRICE TO BUY AT, IF LAST HITS BUY SEND NOTIFICATION?
@@ -33,9 +33,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
+          <img src={logo} />
           <h2>Ducktales</h2>
         </div>
         <div id="usd-graph" className="graph-container">
+          <h1>USD</h1>
           <div className="graph">
             <h3>BtcE</h3>
             <div className="bar1" style={{height: 20 + "%"}}>
@@ -74,7 +76,43 @@ class App extends Component {
           </div>
         </div>
         <div id="btc-graph" className="graph-container">
-
+          <h1>BTC</h1>
+          <div className="graph">
+            <h3>BtcE</h3>
+            <div className="bar1" style={{height: 20 + "%"}}>
+             <p>Litecoin</p>
+            </div>
+            <div className="bar1" style={{height: 30 + "%"}}>
+              <p>Bitcoin</p>
+            </div>
+            <div className="bar2" style={{height: 50 + "%"}}>
+              <p>Ether</p>
+            </div>
+          </div>
+          <div className="graph">
+            <h3>Poloniex</h3>
+            <div className="bar1" style={{height: 20 + "%"}}>
+             <p>Litecoin</p>
+            </div>
+            <div className="bar1" style={{height: 30 + "%"}}>
+              <p>Bitcoin</p>
+            </div>
+            <div className="bar2" style={{height: 50 + "%"}}>
+              <p>Ether</p>
+            </div>
+          </div>
+          <div className="graph">
+            <h3>CoinCap</h3>
+            <div className="bar1" style={{height: 20 + "%"}}>
+             <p>Litecoin</p>
+            </div>
+            <div className="bar1" style={{height: 30 + "%"}}>
+              <p>Bitcoin</p>
+            </div>
+            <div className="bar2" style={{height: 50 + "%"}}>
+              <p>Ether</p>
+            </div>
+          </div>
         </div>
       </div>
     );
