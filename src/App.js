@@ -7,21 +7,17 @@ import './App.css';
 // 1 Ether wirth  0.06049 bitcon , 114.2 usd
 // 1 Dash worth 0.050 bitcoin, 94.24 usd
 // USDT_LTC , USDT_ETH, USDT_DASH on poloniex , I get a 405, too many requests? 
-//
+// Maybe alter API to also show Bitcoin-Ether Bitcoin-DASH...
+
+//https://www.compose.com/articles/graph-data-with-mongodb/
+
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      
-    }
-  }
 
-  componentDidMount() {
-    // this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
-    // this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
-    // this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
-    // this.fetchPoloniex()
+    }
   }
 
   render() {
