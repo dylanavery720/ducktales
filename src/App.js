@@ -28,8 +28,12 @@ class App extends Component {
   }
 
   //Break sub-graphs into components
+  //props.last, props.buy, props.height
+  //Make a simple key, green = buy
   render() {
-    const { btce_dsh, btce_eth, btce_ltc, polo_dsh, polo_eth, polo_ltc} = this.state.payload
+    const { btce_dsh, btce_eth, btce_ltc, polo_dsh, polo_eth, polo_ltc,
+      btc_dsh, btc_eth, btc_ltc, polo_dsh_btc, polo_eth_btc, polo_ltc_btc,
+    } = this.state.payload
     return (
       <div className="App">
         <div className="App-header">
@@ -41,25 +45,25 @@ class App extends Component {
           <h1>USD</h1>
           <div className="graph">
             <h3>BtcE</h3>
-            <div className={btce_ltc.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: btce_ltc.last*2 + "%"}}>
+            <div className={btce_ltc.last <= btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: btce_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className={btce_dsh.last > btce_dsh.buy ? 'bar2' : 'bar1'} style={{height: btce_dsh.last/2 + "%"}}>
+            <div className={btce_dsh.last <= btce_dsh.buy ? 'bar2' : 'bar1'} style={{height: btce_dsh.last/2 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className={btce_eth.last > btce_eth.buy ? 'bar2' : 'bar1'} style={{height: btce_eth.last/2 + "%"}}>
+            <div className={btce_eth.last <= btce_eth.buy ? 'bar2' : 'bar1'} style={{height: btce_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className={polo_ltc.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_ltc.last*2 + "%"}}>
+            <div className={polo_ltc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className={polo_dsh.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_dsh.last/2 + "%"}}>
+            <div className={polo_dsh.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh.last/2 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className={polo_eth.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_eth.last/2 + "%"}}>
+            <div className={polo_eth.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
@@ -79,26 +83,26 @@ class App extends Component {
         <div id="btc-graph" className="graph-container">
           <h1>BTC</h1>
           <div className="graph">
-            <h3>BtcE</h3>
-            <div className="bar1" style={{height: 20 + "%"}}>
+           <h3>BtcE</h3>
+            <div className={btc_ltc.last < btc_ltc.buy ? 'bar2' : 'bar1'} style={{height: btc_ltc.last*100 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: 30 + "%"}}>
+            <div className={btc_dsh.last < btc_dsh.buy ? 'bar2' : 'bar1'} style={{height: btc_dsh.last*50 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: 50 + "%"}}>
+            <div className={btc_eth.last < btc_eth.buy ? 'bar2' : 'bar1'} style={{height: btc_eth.last*50 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className="bar1" style={{height: 20 + "%"}}>
+            <div className={polo_ltc_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc_btc.last*100 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: 30 + "%"}}>
+            <div className={polo_dsh_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh_btc.last*50 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: 50 + "%"}}>
+            <div className={polo_eth_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_eth_btc.last*50 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
