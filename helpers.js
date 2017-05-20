@@ -1,20 +1,19 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-let bigData = []
+const bigData = { polo: {}, btce: {} }
 
 //Dash goes fastest so first? lol
 
 module.exports = {
 
   fetchBatch() {
-    this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
-    this.postPoloniex(bigData)
+    this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
+    setTimeout(() => this.postPoloniex(bigData), 2000)
   },
 
   postPoloniex(data) {
-    setInterval(() => console.log(data), 5000)
     fetch('http://localhost:8080/api/pricing', {
       method: 'POST',
       headers: {
@@ -24,12 +23,12 @@ module.exports = {
         'Access-Control-Allow-Methods': '*',
       },
       body: JSON.stringify({
-        btce_ltc: data.ticker,
-        btce_eth: data.ticker,
-        btce_dsh: data.ticker,
-        polo_ltc: data.USDT_LTC,
-        polo_eth: data.USDT_ETH,
-        polo_dsh: data.USDT_DASH }),
+        btce_ltc: data.btce.ltc_usd.ticker,
+        btce_eth: data.btce.eth_usd.ticker,
+        btce_dsh: data.btce.dsh_usd.ticker,
+        polo_ltc: data.polo.USDT_LTC,
+        polo_eth: data.polo.USDT_ETH,
+        polo_dsh: data.polo.USDT_DASH }),
     })
   },
 
@@ -62,7 +61,7 @@ module.exports = {
       },
     })
     .then(response => response.json())
-    .then(data => bigData.push({ [url.substring(24, 31)]: data }))
+    .then(data => Object.assign(bigData.btce, { [url.substring(24, 31)]: data }))
     .catch(error => console.log(error))
   },
 
@@ -71,7 +70,7 @@ module.exports = {
       method: 'GET',
     })
     .then(response => response.json())
-    .then(data => bigData.push(data))
+    .then(data => Object.assign(bigData.polo, data))
     .then(data =>  this.fetchBatch())
     .catch(error => console.log(error))
   },

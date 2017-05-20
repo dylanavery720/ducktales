@@ -16,6 +16,9 @@ const Pricing = mongoose.model('Pricing', {
   polo_ltc: {},
   polo_eth: {},
   polo_dsh: {},
+  btce_ltc: {},
+  btce_eth: {},
+  btce_dsh: {},
   poloniex: String,
   coincap: String,
 })
