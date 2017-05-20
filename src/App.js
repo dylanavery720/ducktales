@@ -6,10 +6,7 @@ import './App.css';
 // 1 Litecoin worth 0.01407 bitcoin , 26.45 usd
 // 1 Ether wirth  0.06049 bitcon , 114.2 usd
 // 1 Dash worth 0.050 bitcoin, 94.24 usd
-// USDT_LTC , USDT_ETH, USDT_DASH on poloniex , I get a 405, too many requests?
-// Maybe alter API to also show Bitcoin-Ether Bitcoin-DASH...
 
-//https://www.compose.com/articles/graph-data-with-mongodb/
 
 
 class App extends Component {
@@ -57,13 +54,13 @@ class App extends Component {
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className={polo_ltc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc.last*2 + "%"}}>
+            <div className={polo_ltc.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className={polo_dsh.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh.last/2 + "%"}}>
+            <div className={polo_dsh.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh.last/2 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className={polo_eth.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_eth.last/2 + "%"}}>
+            <div className={polo_eth.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
@@ -84,25 +81,25 @@ class App extends Component {
           <h1>BTC</h1>
           <div className="graph">
            <h3>BtcE</h3>
-            <div className={btc_ltc.last < btc_ltc.buy ? 'bar2' : 'bar1'} style={{height: btc_ltc.last*100 + "%"}}>
+            <div className={btc_ltc.last <= btc_ltc.buy ? 'bar2' : 'bar1'} style={{height: btc_ltc.last*1000 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className={btc_dsh.last < btc_dsh.buy ? 'bar2' : 'bar1'} style={{height: btc_dsh.last*50 + "%"}}>
+            <div className={btc_dsh.last <= btc_dsh.buy ? 'bar2' : 'bar1'} style={{height: btc_dsh.last*500 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className={btc_eth.last < btc_eth.buy ? 'bar2' : 'bar1'} style={{height: btc_eth.last*50 + "%"}}>
+            <div className={btc_eth.last <= btc_eth.buy ? 'bar2' : 'bar1'} style={{height: btc_eth.last*500 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className={polo_ltc_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc_btc.last*100 + "%"}}>
+            <div className={polo_ltc_btc.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_ltc_btc.last*1000 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className={polo_dsh_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh_btc.last*50 + "%"}}>
+            <div className={polo_dsh_btc.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_dsh_btc.last*500 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className={polo_eth_btc.percentChange < 0 ? 'bar2' : 'bar1'} style={{height: polo_eth_btc.last*50 + "%"}}>
+            <div className={polo_eth_btc.percentChange > 0 ? 'bar2' : 'bar1'} style={{height: polo_eth_btc.last*500 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
