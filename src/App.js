@@ -53,13 +53,13 @@ class App extends Component {
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className="bar1" style={{height: 20 + "%"}}>
+            <div className="bar1" style={{height: polo_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+            <div className="bar1" style={{height: polo_dsh.last/2 + "%"}}>
+              <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: 50 + "%"}}>
+            <div className="bar2" style={{height: polo_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
@@ -69,7 +69,7 @@ class App extends Component {
              <p>Litecoin</p>
             </div>
             <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+              <p>DASH</p>
             </div>
             <div className="bar2" style={{height: 50 + "%"}}>
               <p>Ether</p>
@@ -84,7 +84,7 @@ class App extends Component {
              <p>Litecoin</p>
             </div>
             <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+              <p>DASH</p>
             </div>
             <div className="bar2" style={{height: 50 + "%"}}>
               <p>Ether</p>
@@ -96,7 +96,7 @@ class App extends Component {
              <p>Litecoin</p>
             </div>
             <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+              <p>DASH</p>
             </div>
             <div className="bar2" style={{height: 50 + "%"}}>
               <p>Ether</p>
@@ -108,7 +108,7 @@ class App extends Component {
              <p>Litecoin</p>
             </div>
             <div className="bar1" style={{height: 30 + "%"}}>
-              <p>Bitcoin</p>
+              <p>DASH</p>
             </div>
             <div className="bar2" style={{height: 50 + "%"}}>
               <p>Ether</p>

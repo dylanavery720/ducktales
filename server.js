@@ -42,6 +42,9 @@ app.get('/api/pricing', (req, res) => {
 //TRY TO USE UPDATE INSTEAD OF CREATE ON THE PRICING TABLE...
 
 app.post('/api/pricing', (req, res) => {
+  Pricing.remove({}, (err) => { 
+   console.log('collection removed', err) 
+  });
   Pricing.create({
     polo_ltc: req.body.polo_ltc,
     polo_eth: req.body.polo_eth,
