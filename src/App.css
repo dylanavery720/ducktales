@@ -1,22 +1,88 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: #212121;
+  height: 100px;
   padding: 20px;
   color: white;
+  font-family: 'Inconsolata', monospace;
 }
 
 .App-intro {
   font-size: large;
 }
+
+.graph-container {
+  height: 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.graph {
+  /*height: 300px;*/
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+#usd-graph {
+   background: #C7E5C8;
+}
+
+#btc-graph {
+  background: #FEEA3A;
+}
+
+.bar1 {
+  background: red;
+  margin: 10px;
+  width: 30%;
+  padding: 20px;
+}
+
+.bar2 {
+  background: green;
+  width: 30%;
+  margin: 10px;
+  padding: 20px;
+}
+
+p {
+  text-align: center;
+}
+
+h1 {
+  margin: 0 auto;
+  align-self: center;
+}
+
+h2 {
+  display: inline-block;
+  margin-left: 30%;
+}
+
+h3 {
+  float: left;
+  align-self: flex-start; 
+}
+
+img {
+  height: 100px;
+  display: inline-block;
+  text-align: center;
+}
+
+button {
+    display: inline-block;
+    width: 100%;
+    padding: 8px;
+    color: #212121;
+    background: rgba(55,55,55, 0.3);
+    border: 2px solid #fff;
+    outline: none;
+    font-size: 50px;
+    cursor: pointer;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
