@@ -1,6 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-const bigData = { polo: {}, btce: {} }
+const batchData = { polo: {}, btce: {} }
 
 module.exports = {
 
@@ -8,7 +8,7 @@ module.exports = {
     this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
-    setTimeout(() => this.postToMongo(bigData), 1000)
+    setTimeout(() => this.postToMongo(batchData), 1000)
   },
 
   postToMongo(data) {
@@ -42,7 +42,7 @@ module.exports = {
       },
     })
     .then(response => response.json())
-    .then(data => Object.assign(bigData.btce, { [newKey]: data }))
+    .then(data => Object.assign(batchData.btce, { [newKey]: data }))
     .catch(error => console.log(error))
   },
 
@@ -51,7 +51,7 @@ module.exports = {
       method: 'GET',
     })
     .then(response => response.json())
-    .then(data => Object.assign(bigData.polo, data))
+    .then(data => Object.assign(batchData.polo, data))
     .then(data => this.fetchBatch())
     .catch(error => console.log(error))
   },
