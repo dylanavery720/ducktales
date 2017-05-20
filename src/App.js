@@ -41,25 +41,25 @@ class App extends Component {
           <h1>USD</h1>
           <div className="graph">
             <h3>BtcE</h3>
-            <div className="bar1" style={{height: btce_ltc.last*2 + "%"}}>
+            <div className={btce_ltc.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: btce_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: btce_dsh.last/2 + "%"}}>
+            <div className={btce_dsh.last > btce_dsh.buy ? 'bar2' : 'bar1'} style={{height: btce_dsh.last/2 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: btce_eth.last/2 + "%"}}>
+            <div className={btce_eth.last > btce_eth.buy ? 'bar2' : 'bar1'} style={{height: btce_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
           <div className="graph">
             <h3>Poloniex</h3>
-            <div className="bar1" style={{height: polo_ltc.last*2 + "%"}}>
+            <div className={polo_ltc.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_ltc.last*2 + "%"}}>
              <p>Litecoin</p>
             </div>
-            <div className="bar1" style={{height: polo_dsh.last/2 + "%"}}>
+            <div className={polo_dsh.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_dsh.last/2 + "%"}}>
               <p>DASH</p>
             </div>
-            <div className="bar2" style={{height: polo_eth.last/2 + "%"}}>
+            <div className={polo_eth.last > btce_ltc.buy ? 'bar2' : 'bar1'} style={{height: polo_eth.last/2 + "%"}}>
               <p>Ether</p>
             </div>
           </div>
