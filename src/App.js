@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import logo from './ducktalesgold.png';
 import './App.css';
 
-// HUEY DUEY LUEY ADDRESSES W/ BITCOIN ICONS IN  HEADER?
-
 class App extends Component {
   constructor() {
     super()
@@ -33,7 +31,7 @@ class App extends Component {
            Buy<div className='green'></div>
           </div>
         </div>
-        {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW TICKER</button> }
+        {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW CHARTS</button>}
         {this.state.payload._id && <div><div id='usd-graph' className='graph-container'>
           <h1>USD</h1>
           <div className='graph'>
