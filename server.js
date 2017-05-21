@@ -46,7 +46,6 @@ app.get('/api/pricing', (req, res) => {
 })
 
 app.post('/api/pricing', (req, res) => {
-  console.log(req.body.co)
   Pricing.remove({}, (err) => {
     console.log('collection removed', err)
   });

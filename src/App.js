@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import logo from './ducktalesgold.png';
 import './App.css';
 
-// SHOW AVERAGE, LAST, AND PRICE TO BUY AT, IF LAST HITS BUY SEND NOTIFICATION?
-
 class App extends Component {
   constructor() {
     super()
@@ -17,12 +15,6 @@ class App extends Component {
     .then(response => response.json())
     .then(data => this.setState({ payload: data[data.length - 1] }))
   }
-
-
- //Responsive
-  //Also add good readMe 
-  //HUEY DUEY LUEY ADDRESSES W/ BITCOIN ICONS IN  HEADER?
-  //Linting
 
   render() {
     const { btce_dsh, btce_eth, btce_ltc, polo_dsh, polo_eth, polo_ltc,
@@ -39,7 +31,7 @@ class App extends Component {
            Buy<div className='green'></div>
           </div>
         </div>
-        {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW TICKER</button> }
+        {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW CHARTS</button>}
         {this.state.payload._id && <div><div id='usd-graph' className='graph-container'>
           <h1>USD</h1>
           <div className='graph'>
@@ -68,13 +60,13 @@ class App extends Component {
           </div>
           <div className='graph'>
             <h3>CoinCap</h3>
-            <div className={coincap_ltc.perc > 0 ? 'bar2' : 'bar1'}  style={{ height: coincap_ltc.price * 2 + '%' }}>
+            <div className={coincap_ltc.perc > 0 ? 'bar2' : 'bar1'} style={{ height: coincap_ltc.price * 2 + '%' }}>
              <p>Litecoin</p>
             </div>
-            <div className={coincap_dsh.perc > 0 ? 'bar2' : 'bar1'}  style={{ height: coincap_dsh.price / 2 + '%' }}>
+            <div className={coincap_dsh.perc > 0 ? 'bar2' : 'bar1'} style={{ height: coincap_dsh.price / 2 + '%' }}>
               <p>DASH</p>
             </div>
-            <div className={coincap_eth.perc > 0 ? 'bar2' : 'bar1'}  style={{ height: coincap_eth.price / 2 + '%' }}>
+            <div className={coincap_eth.perc > 0 ? 'bar2' : 'bar1'} style={{ height: coincap_eth.price / 2 + '%' }}>
               <p>Ether</p>
             </div>
           </div>
@@ -107,13 +99,13 @@ class App extends Component {
           </div>
           <div className='graph'>
             <h3>CoinCap</h3>
-            <div className='bar1' style={{ height: 40 + '%' }}>
+            <div className='bar1' style={{ height: 20 + '%' }}>
              <p>Litecoin</p>
             </div>
-            <div className='bar1' style={{ height: 35 + '%' }}>
+            <div className='bar1' style={{ height: 30 + '%' }}>
               <p>DASH</p>
             </div>
-            <div className='bar2' style={{ height: 60 + '%' }}>
+            <div className='bar2' style={{ height: 50 + '%' }}>
               <p>Ether</p>
             </div>
           </div>
