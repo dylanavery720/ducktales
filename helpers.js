@@ -1,16 +1,17 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-const batchData = { polo: {}, btce: {} }
+const batchData = { polo: {}, btce: {}, coincap: {} }
 
 module.exports = {
 
-  fetchBatch() {
+  fetchBatch() { 
     this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/eth_btc/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_btc/ticker')
     this.fetchBtc('https://btc-e.com/api/2/dsh_btc/ticker')
+    this.fetchCoincap()
     setTimeout(() => this.postToMongo(batchData), 1000)
   },
 
@@ -36,6 +37,9 @@ module.exports = {
         polo_ltc_btc: data.polo.BTC_LTC,
         polo_eth_btc: data.polo.BTC_ETH,
         polo_dsh_btc: data.polo.BTC_DASH,
+        coincap_ltc: data.coincap[4],
+        coincap_eth: data.coincap[2],
+        coincap_dsh: data.coincap[5],
       }),
     })
   },
@@ -63,6 +67,15 @@ module.exports = {
     .then(response => response.json())
     .then(data => Object.assign(batchData.polo, data))
     .then(data => this.fetchBatch())
+    .catch(error => console.log(error))
+  },
+
+  fetchCoincap() {
+    fetch('http://www.coincap.io/front', {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => Object.assign(batchData.coincap, data))
     .catch(error => console.log(error))
   },
 
