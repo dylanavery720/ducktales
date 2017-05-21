@@ -46,6 +46,23 @@
   padding: 20px;
 }
 
+.graph-key {
+  width: 100px;
+  float: right;
+}
+
+.red {
+  background: red;
+  height: 15px;
+  margin: 5px;
+}
+
+.green {
+  background: green;
+  height: 15px;
+  margin: 5px;
+}
+
 p {
   text-align: center;
 }
