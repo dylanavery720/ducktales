@@ -3,11 +3,6 @@ import logo from './ducktalesgold.png';
 import './App.css';
 
 // SHOW AVERAGE, LAST, AND PRICE TO BUY AT, IF LAST HITS BUY SEND NOTIFICATION?
-// 1 Litecoin worth 0.01407 bitcoin , 26.45 usd
-// 1 Ether wirth  0.06049 bitcon , 114.2 usd
-// 1 Dash worth 0.050 bitcoin, 94.24 usd
-
-
 
 class App extends Component {
   constructor() {
@@ -26,7 +21,10 @@ class App extends Component {
   //Break sub-graphs into components
   //props.last, props.buy, props.height
  //Make a simple key, green = buy
-  //Also add good readMe and test suite
+  //Also add good readMe 
+  //CoinCap?
+  //HUEY DUEY LUEY ADDRESSES W/ BITCOIN ICONS IN  HEADER?
+  
 
   render() {
     const { btce_dsh, btce_eth, btce_ltc, polo_dsh, polo_eth, polo_ltc,
