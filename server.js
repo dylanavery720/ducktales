@@ -6,8 +6,6 @@ const methodOverride = require('method-override')
 const helpers = require('./helpers.js')
 const cors = require('cors')
 
-// const port = set up some production stuffs... garage bin or milkman...
-
 const app = express()
 
 mongoose.connect('mongodb://localhost:27017/ducktales')
@@ -25,6 +23,9 @@ const Pricing = mongoose.model('Pricing', {
   btc_ltc: {},
   btc_eth: {},
   btc_dsh: {},
+  coincap_ltc: {},
+  coincap_eth: {},
+  coincap_dsh: {},
   poloniex: String,
   coincap: String,
 })
@@ -45,6 +46,7 @@ app.get('/api/pricing', (req, res) => {
 })
 
 app.post('/api/pricing', (req, res) => {
+  console.log(req.body.co)
   Pricing.remove({}, (err) => {
     console.log('collection removed', err)
   });
@@ -61,7 +63,9 @@ app.post('/api/pricing', (req, res) => {
     btc_ltc: req.body.btc_ltc,
     btc_eth: req.body.btc_eth,
     btc_dsh: req.body.btc_dsh,
-    coincap: req.body.coincap,
+    coincap_ltc: req.body.coincap_ltc,
+    coincap_eth: req.body.coincap_eth,
+    coincap_dsh: req.body.coincap_dsh,
     done: false,
   }, (err, prices) => {
     Pricing.find((err, prices) => {
