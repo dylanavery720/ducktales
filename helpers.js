@@ -1,10 +1,11 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+
 const batchData = { polo: {}, btce: {}, coincap: {} }
 
 module.exports = {
 
-  fetchBatch() { 
+  fetchBatch() {
     this.fetchBtc('https://btc-e.com/api/2/eth_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/ltc_usd/ticker')
     this.fetchBtc('https://btc-e.com/api/2/dsh_usd/ticker')
@@ -45,7 +46,7 @@ module.exports = {
   },
 
   fetchBtc(url) {
-    let newKey = url.substring(24, 31)
+    const newKey = url.substring(24, 31)
     fetch(url, {
       method: 'GET',
       headers: {

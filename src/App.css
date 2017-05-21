@@ -17,7 +17,6 @@
 }
 
 .graph {
-  /*height: 300px;*/
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -101,7 +100,3 @@ button {
 }
 
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
