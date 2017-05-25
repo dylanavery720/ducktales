@@ -6,8 +6,8 @@ import './App.css';
 
 const ETHEREUM_CLIENT = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
 
-const reportContractABI = [{"constant":true,"inputs":[],"name":"getReports","outputs":[{"name":"","type":"bytes32[]"},{"name":"","type":"uint256[]"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_report","type":"bytes32"},{"name":"_date","type":"uint256"}],"name":"saveReport","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"reports","outputs":[{"name":"report","type":"bytes32"},{"name":"date","type":"uint256"}],"payable":false,"type":"function"}]
-const reportContractAddress = '0x4963b143970d82e7f1cd5cf453e15fd91703e6c8'
+const reportContractABI = [{"constant":false,"inputs":[{"name":"_usdreport","type":"bytes32"},{"name":"_btcreport","type":"bytes32"},{"name":"_date","type":"uint256"}],"name":"saveReport","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getReports","outputs":[{"name":"","type":"bytes32[]"},{"name":"","type":"bytes32[]"},{"name":"","type":"uint256[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"reports","outputs":[{"name":"usdreport","type":"bytes32"},{"name":"btcreport","type":"bytes32"},{"name":"date","type":"uint256"}],"payable":false,"type":"function"}]
+const reportContractAddress = '0xa1e9704a85a96c98db28e0adb7f9664e409b36ed'
 
 // Huey : '1EABigBsmaGhT9z7GRSxqT9gUit6Gysuii'
 // Duey : '13QPiJc4XXowfJBHGo8rQxfqGifLfsWZmj'
@@ -18,7 +18,6 @@ class App extends Component {
     super()
     this.state = {
       payload: {},
-      reportArray: {},
       coinReport: ETHEREUM_CLIENT.eth.contract(reportContractABI).at(reportContractAddress),
       loadedReports: false,
     }
@@ -31,23 +30,33 @@ class App extends Component {
   fetchFromMongo() {
     fetch('/api/pricing')
     .then(response => response.json())
-    .then(data => this.setState({ payload: data[data.length - 1] }))
+    .then(data => this.setState({ payload: data[data.length - 1], loadedReports: false }))
   }
 
   addReport() {
-    this.state.coinReport.saveReport(JSON.stringify(this.state.payload), Date.now())
+    const usdbuys = Array.from(document.querySelectorAll('div #usd-graph .bar2'))
+    const btcbuys = Array.from(document.querySelectorAll('div #btc-graph .bar2'))
+    const usdsells = Array.from(document.querySelectorAll('div #usd-graph .bar1'))
+    const btcsells = Array.from(document.querySelectorAll('div #btc-graph .bar1'))
+    this.state.coinReport.saveReport(`UsdBuys: ${this.makeReports(usdbuys)}`, `BtcBuys: ${this.makeReports(btcbuys)}`, Date.now(), {from: ETHEREUM_CLIENT.eth.accounts[0], gas: 1000000})
+  }
+
+  makeReports(arr) {
+    const s = new Set(arr.map(inner => inner.innerText))
+	  const t = s.values()
+	  return Array.from(t)
   }
 
   loadReports() {
-    var data = this.state.coinReport.getReports()
-    console.log(data)
-    this.setState({ text: String(data[0]).split(','), date: String(data[1]).split(','), loadedReports: true })
+    const data = this.state.coinReport.getReports()
+    this.setState({ usdtext: String(data[0]).split(','), btctext: String(data[1]).split(','), date: String(data[2]).split(','), loadedReports: true })
   }
   
   showReports() {
-    return this.state.text.map((report, i) => {
-      return <div>
-              <p>{ETHEREUM_CLIENT.toAscii(this.state.text[i])}</p>
+    return this.state.usdtext.map((report, i) => {
+      return <div className="report-eth">
+              <p>{ETHEREUM_CLIENT.toAscii(this.state.usdtext[i])}</p>
+              <p>{ETHEREUM_CLIENT.toAscii(this.state.btctext[i])}</p>
               <p>{this.state.date[i]}</p>
             </div>
     })
@@ -72,7 +81,7 @@ class App extends Component {
         </div>
         {!this.state.payload._id && <button onClick={this.fetchFromMongo.bind(this)}>NEW CHARTS</button>}
         {this.state.loadedReports && this.showReports()}
-        {this.state.payload._id && <div><div id='usd-graph' className='graph-container'>
+        {this.state.payload._id && !this.state.loadedReports && <div><div id='usd-graph' className='graph-container'>
           <h1>USD</h1>
           <div className='graph'>
             <h3>BtcE</h3>
