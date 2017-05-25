@@ -7,7 +7,7 @@ import './App.css';
 const ETHEREUM_CLIENT = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
 
 const reportContractABI = [{"constant":false,"inputs":[{"name":"_usdreport","type":"bytes32"},{"name":"_btcreport","type":"bytes32"},{"name":"_date","type":"uint256"}],"name":"saveReport","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"getReports","outputs":[{"name":"","type":"bytes32[]"},{"name":"","type":"bytes32[]"},{"name":"","type":"uint256[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"reports","outputs":[{"name":"usdreport","type":"bytes32"},{"name":"btcreport","type":"bytes32"},{"name":"date","type":"uint256"}],"payable":false,"type":"function"}]
-const reportContractAddress = '0xa1e9704a85a96c98db28e0adb7f9664e409b36ed'
+const reportContractAddress = '0xdb6b7fd6ff22bceaa2331ac11964d382ea3ff5a7'
 
 // Huey : '1EABigBsmaGhT9z7GRSxqT9gUit6Gysuii'
 // Duey : '13QPiJc4XXowfJBHGo8rQxfqGifLfsWZmj'
@@ -27,6 +27,10 @@ class App extends Component {
     ETHEREUM_CLIENT.eth.defaultAccount = ETHEREUM_CLIENT.eth.accounts[0]
   }
 
+  reset() {
+    this.setState({ payload: {}, loadedReports: false })
+  }
+
   fetchFromMongo() {
     fetch('/api/pricing')
     .then(response => response.json())
@@ -34,30 +38,28 @@ class App extends Component {
   }
 
   addReport() {
-    const usdbuys = Array.from(document.querySelectorAll('div #usd-graph .bar2'))
-    const btcbuys = Array.from(document.querySelectorAll('div #btc-graph .bar2'))
-    const usdsells = Array.from(document.querySelectorAll('div #usd-graph .bar1'))
-    const btcsells = Array.from(document.querySelectorAll('div #btc-graph .bar1'))
-    this.state.coinReport.saveReport(`UsdBuys: ${this.makeReports(usdbuys)}`, `BtcBuys: ${this.makeReports(btcbuys)}`, Date.now(), {from: ETHEREUM_CLIENT.eth.accounts[0], gas: 1000000})
+    const usdbuys = this.makeReports(Array.from(document.querySelectorAll('div #usd-graph .bar2')))
+    const btcbuys = this.makeReports(Array.from(document.querySelectorAll('div #btc-graph .bar2')))
+    this.state.coinReport.saveReport(`UsdBuys: ${usdbuys}`, `BtcBuys: ${btcbuys}`, Date.now(), { from: ETHEREUM_CLIENT.eth.accounts[0], gas: 1000000 })
   }
 
   makeReports(arr) {
     const s = new Set(arr.map(inner => inner.innerText))
-	  const t = s.values()
-	  return Array.from(t)
+    const t = s.values()
+    return Array.from(t)
   }
 
   loadReports() {
     const data = this.state.coinReport.getReports()
     this.setState({ usdtext: String(data[0]).split(','), btctext: String(data[1]).split(','), date: String(data[2]).split(','), loadedReports: true })
   }
-  
+
   showReports() {
     return this.state.usdtext.map((report, i) => {
       return <div className="report-eth">
               <p>{ETHEREUM_CLIENT.toAscii(this.state.usdtext[i])}</p>
               <p>{ETHEREUM_CLIENT.toAscii(this.state.btctext[i])}</p>
-              <p>{this.state.date[i]}</p>
+              <p>{new Date(Number(this.state.date[i])).toString()}</p>
             </div>
     })
   }
@@ -70,8 +72,8 @@ class App extends Component {
     return (
       <div className='App'>
         <div className='App-header'>
-          <img src={logo} />
-          <h2>Ducktales</h2>
+          <img onClick={this.reset.bind(this)} src={logo} />
+          <h2 onClick={this.reset.bind(this)}>Ducktales</h2>
           <h4 onClick={this.addReport.bind(this)}>SAVE REPORT</h4>
           <h4 onClick={this.loadReports.bind(this)}>LOAD REPORTS</h4>
           <div className='graph-key'>
